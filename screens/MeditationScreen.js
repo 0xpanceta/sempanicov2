@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format, subDays } from 'date-fns';
+import styles from '../styles'; // Ensure this path is correct
 
 const { width } = Dimensions.get('window'); // Get the window width
 
@@ -30,64 +31,61 @@ const MeditationScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.calendar}>
+        <View style={styles.cozyContainer}>
+            <View style={localStyles.calendar}>
                 {lastSixDays.concat(today).map((date, index) => (
                     <View
                         key={index}
                         style={[
-                            styles.day,
-                            format(date, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd') ? styles.today : {},
-                            meditatedDays[format(date, 'yyyy-MM-dd')] ? styles.meditated : {}
+                            localStyles.day,
+                            format(date, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd') ? localStyles.today : {},
+                            meditatedDays[format(date, 'yyyy-MM-dd')] ? localStyles.meditated : {}
                         ]}
                     >
-                        <Text style={meditatedDays[format(date, 'yyyy-MM-dd')] ? styles.whiteText : styles.blackText}>
+                        <Text style={[
+                            meditatedDays[format(date, 'yyyy-MM-dd')] ? styles.whiteText : styles.blackText
+                        ]}>
                             {format(date, 'dd/MM')}
                         </Text>
                     </View>
                 ))}
             </View>
-            <Button
-                onPress={toggleMeditation}
-                title={meditatedDays[format(today, 'yyyy-MM-dd')] ? "I actually didn't meditate today" : "I meditated at least 10min today"}
-            />
+            <TouchableOpacity style={styles.cozyButton} onPress={toggleMeditation}>
+                <Text style={styles.cozyButtonText}>
+                    {meditatedDays[format(today, 'yyyy-MM-dd')] ? "Oops, I actually didn't meditate today" : "I meditated at least 10min today"}
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 2
-    },
+const localStyles = StyleSheet.create({
     calendar: {
         flexDirection: 'row',
-        justifyContent: 'space-around', // Ensure even spacing around items
-        width: '100%', // Use the full width of the container
-        padding: 10, // Add padding around the calendar
+        justifyContent: 'space-around',
+        width: '100%',
+        padding: 10,
     },
     day: {
-        width: 45, // Calculate width dynamically, subtract total horizontal padding and divide by 7
-        height: 45,
+        width: 40, // Adjusted width calculation to allow more space for margins
+        height: 40,
         backgroundColor: 'lightgray',
         alignItems: 'center',
         justifyContent: 'center',
-        marginHorizontal: 5 // Add horizontal margin for spacing between days
+        marginHorizontal: 5, // Increased margin for better spacing
     },
     today: {
         borderColor: 'green',
-        borderWidth: 1
+        borderWidth: 2,
     },
     meditated: {
-        backgroundColor: 'green'
-    },
-    blackText: {
-        color: 'black'
+        backgroundColor: 'lightgreen', // Ensures background is dark green
     },
     whiteText: {
-        color: 'white'
+        color: 'white', // Ensures text in meditated days is white
+    },
+    blackText: {
+        color: 'black' // Ensures text in non-meditated days is black
     }
 });
 

@@ -3,6 +3,8 @@ import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, Alert } fro
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
+import styles from '../styles'; // Adjust the path as necessary
+
 
 
 export default function JournalScreen() {
@@ -46,33 +48,30 @@ export default function JournalScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Button title="New Entry" onPress={() => navigation.navigate('NewEntry')} />
+    <View styel={styles.cozyContainer}>
+      <TouchableOpacity style={styles.cozyButton} onPress={() => navigation.navigate('NewEntry')}>
+        <Text style={styles.cozyButtonText}>+ New Entry</Text>
+      </TouchableOpacity>
       <FlatList
         data={entries.sort((a, b) => b.date.localeCompare(a.date))}
         keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
-          <View style={styles.entry}>
-            <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('EntryDetail', { entry: item })}>
-              <Text style={styles.entryDate}>{new Date(item.date).toDateString()}</Text>
+          <View style={localStyles.entry}>
+            <TouchableOpacity style={localStyles.content} onPress={() => navigation.navigate('EntryDetail', { entry: item })}>
+              <Text style={localStyles.entryDate}>{new Date(item.date).toDateString()}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.date)}>
-              <Text style={styles.deleteText}>X</Text>
+            <TouchableOpacity style={localStyles.deleteButton} onPress={() => handleDelete(item.date)}>
+              <Text style={localStyles.deleteText}>X</Text>
             </TouchableOpacity>
           </View>
-            
         )}
       />
     </View>
   );
 }
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
+// Local styles tailored to ensure delete button is on the same row
+const localStyles = StyleSheet.create({
   entry: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -80,20 +79,23 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#cccccc',
+    backgroundColor: '#FAF0E6', // Cozy background
   },
   content: {
-    flex: 1,
+    flex: 1, // Takes maximum width minus the width of delete button
   },
   entryDate: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#5C4033', // Warm brown text color
   },
   deleteButton: {
     padding: 8,
     borderRadius: 5,
+    backgroundColor: '#DB7093', // Soft pink to stay consistent with cozy theme
   },
   deleteText: {
-    color: 'red',
+    color: 'white',
     fontSize: 16,
   },
 });

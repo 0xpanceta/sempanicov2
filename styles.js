@@ -13,11 +13,14 @@ export default StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     margin: 10,
+    width: 250,
   },
   cozyButtonText: {
     fontSize: 18,
     color: '#FFFFFF', // White text
     fontFamily: 'serif', // This will depend on the fonts you have available
+    textAlign: 'center'
+
   },
   cozyTitle: {
     fontSize: 22,

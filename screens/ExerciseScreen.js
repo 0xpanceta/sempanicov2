@@ -22,7 +22,7 @@ export default function ExerciseScreen() {
   const playRecording = async () => {
     console.log('Loading Sound');
     const { sound, status } = await Audio.Sound.createAsync(
-      require('../resources/recordings/Rua da Consolação.m4a'),
+      require('../resources/recordings/Grounding.m4a'),
       { shouldPlay: false }
     );
     setSound(sound);

@@ -10,23 +10,38 @@ import NewEntryScreen from './screens/NewEntryScreen';
 import EntryDetailScreen from './screens/EntryDetailScreen';
 import MeditationScreen from './screens/MeditationScreen';
 import ExerciseScreen from './screens/ExerciseScreen'; // Make sure to import the new audio screen
+import OtherExercisesScreen from './screens/OtherExercisesScreen'; // Import the new screen
+import { Platform } from 'react-native';
 
 const Tab = createMaterialTopTabNavigator();
 const DayToDayStack = createNativeStackNavigator();
-const CrisisStack = createNativeStackNavigator(); // Create a Crisis stack
+const CrisisStack = createNativeStackNavigator(); 
 
 function CrisisStackScreen() {
   return (
-    <CrisisStack.Navigator>
+    <CrisisStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        height: 100,
+        paddingTop: 30,
+      },
+    }}
+    >
       <CrisisStack.Screen
         name="CrisisMain"
         component={CrisisScreen}
-        options={{ title: 'Crisis Management' }}
+        options={{ headerShown: false }}
+        
       />
       <CrisisStack.Screen
         name="ExerciseScreen"
         component={ExerciseScreen}
         options={{ title: 'Play Crisis Audio' }}
+      />
+      <CrisisStack.Screen
+        name="OtherExercisesScreen"
+        component={OtherExercisesScreen}
+        options={{ title: 'Other Exercises' }}
       />
     </CrisisStack.Navigator>
   );
@@ -34,7 +49,13 @@ function CrisisStackScreen() {
 
 function DayToDayStackScreen() {
   return (
-    <DayToDayStack.Navigator>
+    <DayToDayStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        height: 100,
+        paddingTop: 30,
+      }}}
+      >
       <DayToDayStack.Screen
         name="Day-to-Day Main"
         component={DayToDayScreen}
@@ -70,7 +91,7 @@ function MyTabs() {
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
         tabBarLabelStyle: { fontSize: 12 },
-        tabBarStyle: { backgroundColor: 'white' },
+        tabBarStyle: { backgroundColor: 'white', top: 15 },
       }}
     >
       <Tab.Screen

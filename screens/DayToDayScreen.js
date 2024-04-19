@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import styles from '../styles'; // Correct path as per your indication
+import { useNavigation } from '@react-navigation/native';
 
 export default function DayToDayScreen() {
   const navigation = useNavigation(); // Get access to navigation
@@ -8,19 +9,14 @@ export default function DayToDayScreen() {
   console.log("Rendering DayToDayScreen...");
 
   return (
-    <View style={styles.container}>
-      {/* Use the navigation.navigate function to navigate to the Journal screen */}
-      <Button title="Journal" onPress={() => navigation.navigate('Journal')} />
-      <Button title="Meditation Tracker" onPress={() => navigation.navigate('Meditation')} />
-
+    <View style={styles.cozyContainer}>
+      {/* Replacing standard Button with TouchableOpacity for better styling */}
+      <TouchableOpacity style={styles.cozyButton} onPress={() => navigation.navigate('Journal')}>
+        <Text style={styles.cozyButtonText}>Journal</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.cozyButton} onPress={() => navigation.navigate('Meditation')}>
+        <Text style={styles.cozyButtonText}>Meditation Tracker</Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

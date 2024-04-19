@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import styles from '../styles'; // Ensure this path is correct for your project setup
 
 export default function NewEntryScreen() {
   const [text, setText] = useState('');
@@ -32,34 +33,26 @@ export default function NewEntryScreen() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
+      style={styles.cozyContainer}
     >
       <TextInput
-        style={styles.input}
+        style={[styles.cozyInput, localStyles.input]}
         placeholder="Write your thoughts here..."
         multiline
         value={text}
         onChangeText={setText}
       />
-      <Button title="Submit" onPress={saveEntry} />
+      <TouchableOpacity style={styles.cozyButton} onPress={saveEntry}>
+        <Text style={styles.cozyButtonText}>Submit</Text>
+      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    padding: 10,
-  },
+const localStyles = StyleSheet.create({
   input: {
     flex: 1,
-    padding: 10,
-    marginVertical: 20,
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    borderRadius: 5,
-    textAlignVertical: 'top', // This ensures text starts from the top
-    fontSize: 16,
+    marginVertical: 20, // Adjusts vertical spacing
+    textAlignVertical: 'top', // Ensures text starts from the top
   },
 });

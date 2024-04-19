@@ -1,28 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { ScrollView, Text, StyleSheet } from 'react-native';
+import styles from '../styles'; // Ensure this path is correct for your project setup
 
 export default function EntryDetailScreen({ route }) {
   const { entry } = route.params;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.date}>{new Date(entry.date).toDateString()}</Text>
-      <Text style={styles.text}>{entry.text}</Text>
+    <ScrollView contentContainerStyle={localStyles.contentContainer}>
+      <Text style={[styles.cozyTitle, localStyles.date]}>{new Date(entry.date).toDateString()}</Text>
+      <Text style={[styles.cozyText, localStyles.entryText]}>{entry.text}</Text>
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
+const localStyles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1, // Ensure the container can grow to accommodate the content
+    padding: 20, // Apply padding here to ensure it does not interfere with ScrollView behavior
   },
   date: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 10, // Space between the date and the entry text
+    textAlign: 'left', // Ensure the date is left-aligned
   },
-  text: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
+  entryText: {
+    textAlign: 'left', // Ensure the text content is left-aligned
+  }
 });
